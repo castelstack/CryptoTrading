@@ -2,32 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  * {
+    @apply m-0 p-0;
+  }
+  body {
+    @apply m-0 p-0 box-border leading-[1.5] text-sm;
+  }
+  h1 {
+    @apply xl:text-[40px] lg:text-4xl md:text-3xl text-2xl  font-bold;
+  }
+  h2 {
+    @apply xl:text-4xl lg:text-3xl md:text-2xl text-xl  font-bold;
+  }
+  h3 {
+    @apply lg:text-[24px] md:text-[21px] text-[19px]  font-bold;
+  }
+  h4 {
+    @apply lg:text-[20px] md:text-[17px] text-[15px]  font-bold;
+  }
+  h5 {
+    @apply md:text-base text-[13px] font-bold;
+  }
+  h6 {
+    @apply md:text-sm text-[13px] font-bold;
+  }
+  p {
+    @apply md:text-sm text-[13px];
+  }
+  span {
+    @apply text-sm;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .animate {
+    @apply duration-300 transition-all ease-linear delay-150;
+  }
+  .wrapper {
+    @apply max-w-[1312px] w-full mx-auto px-4;
+  }
+  .wrapper-inner {
+    @apply max-w-[1273px] w-full mx-auto;
+  }
+  .h-text {
+    @apply xl:text-[48px] lg:text-[42px] md:text-[37px] text-[35px] leading-[1.5] font-bold;
   }
 }

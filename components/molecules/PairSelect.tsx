@@ -8,9 +8,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import React from 'react';
-type CoinPairs = {
+type CoinPair = {
   symbol: string;
-  pairs: string;
+  pair: string;
 };
 
 export const PairSelect = ({
@@ -18,32 +18,32 @@ export const PairSelect = ({
   setValue,
   value,
   loading,
-  tradingPairs,
+  tradingPair,
 }: {
   baseCurrency: string;
   loading: boolean;
   value: string;
-  tradingPairs: CoinPairs[];
+  tradingPair: CoinPair[];
   setValue: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
     <Select value={value} onValueChange={setValue}>
-      <SelectTrigger className='md:w-[270px] py-2  border-none  focus:ring-none active:ring-none  focus:outline-none active:outline-none'>
+      <SelectTrigger className='md:w-[270px] w-full py-2 px-0  border-none  focus:ring-none active:ring-none  focus:outline-none active:outline-none'>
         <SelectValue
           placeholder='Select pair'
           aria-label={value}
           className=' items-center !text-3xl'
         >
-          <p className='!text-3xl uppercase'>
+          <p className='md:!text-3xl !text-2xl uppercase'>
             {' '}
             {loading ? 'Loading...' : value}
           </p>
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {tradingPairs.map((pair) => (
-          <SelectItem key={pair.symbol} value={pair.pairs}>
-            {pair.pairs}
+        {tradingPair.map((pair) => (
+          <SelectItem key={pair.symbol} value={pair.pair}>
+            {pair.pair}
           </SelectItem>
         ))}
       </SelectContent>

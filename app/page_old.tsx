@@ -6,7 +6,7 @@ import 'tailwindcss/tailwind.css';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-export default function Home() {
+export default function ChartNow() {
   const [series, setSeries] = useState([
     {
       data: [],
@@ -90,3 +90,4 @@ export default function Home() {
     </div>
   );
 }
+

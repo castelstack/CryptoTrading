@@ -2,20 +2,22 @@
 
 import React, { useEffect, useState } from 'react';
 import { PairSelect } from '../molecules/PairSelect';
-import { PairsDailyTicker } from '../molecules/PairsDailyTicker';
+import { PairDailyTicker } from '../molecules/PairDailyTicker';
 import { BaseCurrencySelect } from '../molecules/BaseCurrencySelect';
 import axios from 'axios';
+import { useAppStore } from '@/store/store';
 
 type Coin = {
   symbol: string;
   baseAsset: string;
   quoteAsset: string;
 };
-type CoinPairs = {
+type CoinPair = {
   symbol: string;
-  pairs: string;
+  pair: string;
 };
-export const PairsFullDetails = () => {
+export const PairFullDetails = () => {
+  const handleCurrentPair = useAppStore((state) => state.setCurrentPair);
   const [baseCurrency, setBaseCurrency] = useState('USDT');
   const [baseCoins, setBaseCoins] = useState([
     'USDT',
@@ -29,7 +31,7 @@ export const PairsFullDetails = () => {
     'DOT',
     'LTC',
   ]);
-  const [tradingPairs, setTradingPairs] = useState<CoinPairs[]>([]);
+  const [tradingPair, setTradingPair] = useState<CoinPair[]>([]);
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -43,7 +45,7 @@ export const PairsFullDetails = () => {
         .then((response) => {
           const data = response.data;
           console.log(data, 'tradingPairs');
-          const pairs = data.symbols
+          const pair = data.symbols
             .filter(
               (symbol: Coin) =>
                 symbol.baseAsset === baseCurrency ||
@@ -51,10 +53,11 @@ export const PairsFullDetails = () => {
             )
             .map((symbol: Coin) => ({
               symbol: symbol.symbol,
-              pairs: `${symbol.baseAsset}/${symbol.quoteAsset}`,
+              pair: `${symbol.baseAsset}/${symbol.quoteAsset}`,
             }));
-          setTradingPairs(pairs.splice(0, 10));
-          setValue(pairs[0].pairs);
+          setTradingPair(pair.splice(0, 10));
+          setValue(pair[0].pair);
+          handleCurrentPair({ symbol: pair[0].symbol, pair: pair[0].pair });
         })
         .catch((error: any) => {
           setError(error.message);
@@ -65,12 +68,14 @@ export const PairsFullDetails = () => {
     };
 
     fetchTradingPairs();
-  }, [baseCurrency]);
+  }, [baseCurrency, handleCurrentPair]);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `https://api.binance.com/api/v3/ticker/24hr?symbol=${value.split('/').join('')}`
+        `https://api.binance.com/api/v3/ticker/24hr?symbol=${value
+          .split('/')
+          .join('')}`
       );
       const data = await res.data;
       console.log(data, 'op');
@@ -79,7 +84,8 @@ export const PairsFullDetails = () => {
     if (value) {
       fetchData();
     }
-  }, [value]);
+    handleCurrentPair({ symbol: value.split('/').join(''), pair: value });
+  }, [value, handleCurrentPair]);
 
   return (
     <div className='flex flex-col gap-2'>
@@ -89,15 +95,17 @@ export const PairsFullDetails = () => {
         baseCurrency={baseCurrency}
         setBaseCoins={setBaseCoins}
       />
-      <div className='flex gap-6 '>
+      <div className='flex gap-6 items-center max-md:grid grid-cols-[1fr_max-content] w-full'>
         <PairSelect
           baseCurrency={baseCurrency}
           setValue={setValue}
           value={value}
           loading={loading}
-          tradingPairs={tradingPairs}
+          tradingPair={tradingPair}
         />
-        {dailyTicker && <PairsDailyTicker dailyTicker={dailyTicker} />}
+        {value && (
+          <PairDailyTicker pair={value.split('/').join('').toLowerCase()} />
+        )}
       </div>
     </div>
   );

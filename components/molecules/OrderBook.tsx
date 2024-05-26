@@ -20,7 +20,7 @@ interface DepthData {
   asks: Order[];
 }
 
-export const LiquidationOrderTwo = () => {
+export const OrderBook = () => {
   const currentPair = useAppStore((state) => state.tradingPair);
   const [depthData, setDepthData] = useState<DepthData>({
     lastUpdateId: 0,
@@ -161,8 +161,7 @@ export const LiquidationOrderTwo = () => {
   };
 
   return (
-    <div className=' w-full border p-2'>
-      <p className='font-bold text-xs pb-2'>Order book</p>
+    <>
       <div className='flex items-center mb-4'>
         <button
           className={`h-8 w-8 grid place-content-center rounded-md ${
@@ -206,22 +205,6 @@ export const LiquidationOrderTwo = () => {
             className={`h-3 w-3`}
           />
         </button>
-        {/* <button
-          className={`rounded ${
-            filter === 'bids' ? 'bg-green-500 text-white' : 'bg-gray-100'
-          }`}
-          onClick={() => setFilter('bids')}
-        >
-          Bids
-        </button>
-        <button
-          className={`rounded ${
-            filter === 'asks' ? 'bg-red-500 text-white' : 'bg-gray-200'
-          }`}
-          onClick={() => setFilter('asks')}
-        >
-          Asks
-        </button> */}
       </div>
 
       <section className='overflow-x-auto'>
@@ -234,7 +217,6 @@ export const LiquidationOrderTwo = () => {
           </div>
           <div className='flex flex-col '>
             {filteredOrders().map((order: any, index) => (
-              
               <div
                 key={index}
                 className='relative h-[28px] flex justify-between items-center'
@@ -256,7 +238,6 @@ export const LiquidationOrderTwo = () => {
           </div>
         </div>
       </section>
-      <TradeAgg/>
-    </div>
+    </>
   );
 };

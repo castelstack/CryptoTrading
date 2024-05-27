@@ -1,15 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'tailwindcss/tailwind.css';
+import { useTheme } from 'next-themes';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function ChartView() {
+  const { setTheme, theme } = useTheme();
   const [series, setSeries] = useState([{ data: [] }]);
   const [volumeSeries, setVolumeSeries] = useState([{ data: [] }]);
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  const isDarkTheme = useMemo(
+    () => (theme === 'light' ? false : true),
+    [theme]
+  );
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -102,13 +108,11 @@ export default function ChartView() {
     };
   }, [isDarkTheme]);
 
-  const toggleTheme = () => setIsDarkTheme((prevTheme) => !prevTheme);
-
   const candlestickOptions = {
     chart: {
       type: 'candlestick',
       height: 350,
-      background: isDarkTheme ? '#1f1f1f' : '#ffffff',
+      // background: isDarkTheme ? '#1f1f1f' : '#ffffff',
       toolbar: {
         show: false,
       },
@@ -151,7 +155,7 @@ export default function ChartView() {
     chart: {
       type: 'bar',
       height: 150,
-      background: isDarkTheme ? '#1f1f1f' : '#ffffff',
+      // background: isDarkTheme ? '#1f1f1f' : '#ffffff',
       zoom: {
         enabled: false,
       },
@@ -162,7 +166,7 @@ export default function ChartView() {
 
     xaxis: {
       type: 'datetime',
-     
+
       labels: {
         show: false,
         style: {

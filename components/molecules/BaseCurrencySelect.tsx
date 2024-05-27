@@ -33,7 +33,7 @@ export const BaseCurrencySelect = ({
           key={coin}
           type={'button'}
           variant={coin === baseCurrency ? 'default' : 'secondary'}
-          className='h-4 py-3 px-4 rounded text-xs'
+          className='h-4 py-3 px-4 rounded-none text-xs'
           onClick={() => handleCoinClick(coin)}
         >
           {coin}

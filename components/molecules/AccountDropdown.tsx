@@ -11,14 +11,14 @@ import Image from 'next/image';
 export const AccountDropdown = () => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='w-[150px] py-1 px-3 flex items-center gap-2 bg-slate-100 rounded-md'>
+      <DropdownMenuTrigger className='w-[150px] py-1 px-3 flex items-center gap-2 bg-slate-100 dark:bg-slate-800 rounded-none'>
         <Image
           width={30}
           height={30}
           objectFit='contain'
           src={'/funny.jpeg'}
           alt='user avatar'
-          className='rounded-full w-8 h-8 bg-slate-300 p-1'
+          className='rounded-full w-8 h-8 bg-slate-300 dark:bg-slate-900 p-1'
         />
         <p>John Doe</p>
       </DropdownMenuTrigger>

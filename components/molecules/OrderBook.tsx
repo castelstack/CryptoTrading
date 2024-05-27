@@ -162,10 +162,10 @@ export const OrderBook = () => {
 
   return (
     <>
-      <div className='flex items-center mb-4'>
+      <div className='flex items-center mb-4 mt-2'>
         <button
-          className={`h-8 w-8 grid place-content-center rounded-md ${
-            filter === 'all' ? 'bg-slate-100 ' : ''
+          className={`h-8 w-8 grid place-content-center ${
+            filter === 'all' ? 'bg-slate-100 dark:bg-slate-800 ' : ''
           } `}
           onClick={() => setFilter('all')}
         >
@@ -178,8 +178,8 @@ export const OrderBook = () => {
           />
         </button>
         <button
-          className={`h-8 w-8 grid place-content-center rounded-md ${
-            filter === 'bids' ? 'bg-slate-100 ' : ''
+          className={`h-8 w-8 grid place-content-center ${
+            filter === 'bids' ? 'bg-slate-100 dark:bg-slate-800 ' : ''
           } `}
           onClick={() => setFilter('bids')}
         >
@@ -192,8 +192,8 @@ export const OrderBook = () => {
           />
         </button>
         <button
-          className={`h-8 w-8 grid place-content-center rounded-md ${
-            filter === 'asks' ? 'bg-slate-100 ' : ''
+          className={`h-8 w-8 grid place-content-center ${
+            filter === 'asks' ? 'bg-slate-100 dark:bg-slate-800 ' : ''
           } `}
           onClick={() => setFilter('asks')}
         >
@@ -208,10 +208,10 @@ export const OrderBook = () => {
       </div>
 
       <section className='overflow-x-auto'>
-        <div className='min-w-full bg-white '>
+        <div className='min-w-full bg-white dark:bg-transparent '>
           <div className='flex items-center justify-between h-[28px]'>
-            <p className='text-xs'>Price({currentPair.pair.split('/')[0]})</p>
-            <p className='text-xs'>
+            <p className='text-xs text-slate-700 dark:text-slate-400'>Price({currentPair.pair.split('/')[0]})</p>
+            <p className='text-xs text-slate-700 dark:text-slate-400'>
               Quantity({currentPair.pair.split('/')[1]})
             </p>
           </div>
@@ -221,16 +221,18 @@ export const OrderBook = () => {
                 key={index}
                 className='relative h-[28px] flex justify-between items-center'
               >
-                <p className='text-xs z-[1] text-slate-700'>
+                <p className='text-xs z-[1] text-slate-700 dark:text-slate-200'>
                   {order.price.toFixed(2)}
                 </p>
-                <p className='text-xs z-[1] text-slate-700'>
+                <p className='text-xs z-[1] text-slate-700 dark:text-slate-200'>
                   {order.quantity.toFixed(2)}
                 </p>
                 <div
                   style={{ width: `${order.percentage}%` }}
                   className={`absolute top-0 w-full z-[0] h-[28px] right-0 ${
-                    order.side === 'BUY' ? 'bg-green-50 ' : 'bg-red-50 '
+                    order.side === 'BUY'
+                      ? 'bg-green-50 dark:bg-green-600 '
+                      : 'bg-red-50 dark:bg-red-600'
                   }`}
                 />
               </div>

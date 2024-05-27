@@ -8,13 +8,13 @@ import { Button } from '../ui/button';
 export const DispayOrdersAndTrades = () => {
   const [tab, setTab] = useState(true);
   return (
-    <section className=' w-full border p-2'>
-      <div className='dark:bg-slate-50 p-1 rounded-lg grid grid-cols-2 gap-2'>
+    <section className=' w-full border dark:border-slate-700 p-2'>
+      <div className='dark:bg-slate-700 p-1  grid grid-cols-2 gap-2'>
         <Button
           type='button'
           onClick={() => setTab((prev) => !prev)}
           variant={tab ? 'secondary' : 'ghost'}
-          className='h-6 text-xs animate'
+          className='h-6 text-xs animate rounded-none'
         >
           Orders
         </Button>
@@ -22,7 +22,7 @@ export const DispayOrdersAndTrades = () => {
           type='button'
           onClick={() => setTab((prev) => !prev)}
           variant={!tab ? 'secondary' : 'ghost'}
-          className='h-6 text-xs animate'
+          className='h-6 text-xs animate rounded-none'
         >
           Trades
         </Button>

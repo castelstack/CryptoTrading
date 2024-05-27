@@ -19,7 +19,7 @@ import {
   YAxis,
 } from 'react-financial-charts';
 
-const Tooltips = ({
+const FinChart = ({
   axisAt = 'right',
   height = 350,
   ratio = 1,
@@ -184,5 +184,5 @@ const Tooltips = ({
 };
 
 export default withSize({ style: { minHeight: 600 } })(
-  withDeviceRatio()(Tooltips as any) as any
+  withDeviceRatio()(FinChart as any) as any
 );

@@ -5,7 +5,7 @@ import { ThemeSwitch } from '../molecules/ThemeSwitch';
 
 export const Header = () => {
   return (
-    <header className='py-3 px-4 flex justify-between gap-6 wrapper border-b'>
+    <header className='border dark:border-slate-700 mt-4 py-2 px-2 flex justify-between gap-6 wrapper '>
       <Logo />
 
       <div className='flex items-center gap-3'>

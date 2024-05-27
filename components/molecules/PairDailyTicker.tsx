@@ -1,5 +1,5 @@
 'use client';
-import { ArrowDown, ArrowUp, Scale3D } from 'lucide-react';
+import { ArrowDown, ArrowUp, Mountain, BarChart2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 interface Ticker {
@@ -15,9 +15,7 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
   const [usdValue, setUsdValue] = useState<string | null>(null);
 
   useEffect(() => {
-    const ws = new WebSocket(
-      `wss://stream.binance.com:9443/ws/${pair}@ticker`
-    );
+    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${pair}@ticker`);
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
@@ -52,7 +50,6 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
     }
   }, [dailyTicker, pair]);
 
-
   const priceChangeColor =
     dailyTicker && parseFloat(dailyTicker.priceChange) >= 0
       ? 'text-green-600'
@@ -70,45 +67,33 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
         </p>
         <p className={`text-sm ${priceChangeColor}`}>${usdValue}</p>
       </div>
-      <section className='flex divide-x overflow-x-auto max-md:col-span-full'>
-        <div className='flex flex-col gap-1 px-3 hover:bg-slate-50 animate py-1 min-w-[120px] md:min-w-[150px]'>
+      <section className='flex divide-x dark:divide-slate-700 overflow-x-auto max-md:col-span-full'>
+        <div className='flex flex-col gap-1 px-3 animate py-1 min-w-[120px] md:min-w-[150px]'>
           <p className='text-xs text-slate-600 flex items-center gap-2'>
-            <ArrowUp
-              size={15}
-              className='border rounded-full border-slate-600'
-            />
+            <BarChart2 size={20} className='border border-slate-600 p-1' />
             24h Change
           </p>
           <p className={`text-sm ${priceChangeColor}`}>
             {dailyTicker.priceChange}
           </p>
         </div>
-        <div className='flex flex-col gap-1 px-3 hover:bg-slate-50 animate py-1 min-w-[120px] md:min-w-[150px]'>
+        <div className='flex flex-col gap-1 px-3 animate py-1 min-w-[120px] md:min-w-[150px]'>
           <p className='text-xs text-slate-600 flex items-center gap-2'>
-            <ArrowDown
-              size={15}
-              className='border rounded-full border-slate-600'
-            />
+            <ArrowDown size={20} className='border border-slate-600 p-1' />
             24h Low
           </p>
           <p className='text-sm text-red-600'>{dailyTicker.lowPrice}</p>
         </div>
-        <div className='flex flex-col gap-1 px-3 hover:bg-slate-50 animate py-1 min-w-[120px] md:min-w-[150px]'>
+        <div className='flex flex-col gap-1 px-3 animate py-1 min-w-[120px] md:min-w-[150px]'>
           <p className='text-xs text-slate-600 flex items-center gap-2'>
-            <ArrowUp
-              size={15}
-              className='border rounded-full border-slate-600'
-            />
+            <ArrowUp size={20} className='border border-slate-600 p-1' />
             24h High
           </p>
           <p className='text-sm text-green-600'>{dailyTicker.highPrice}</p>
         </div>
-        <div className='flex flex-col gap-1 px-3 hover:bg-slate-50 animate py-1 min-w-[120px] md:min-w-[150px]'>
+        <div className='flex flex-col gap-1 px-3 animate py-1 min-w-[120px] md:min-w-[150px]'>
           <p className='text-xs text-slate-600 flex items-center gap-2'>
-            <Scale3D
-              size={15}
-              className='border rounded-full border-slate-600'
-            />
+            <Mountain size={20} className='border border-slate-600 p-1' />
             24h Volume
           </p>
           <p className='text-sm text-green-600'>{dailyTicker.volume}</p>

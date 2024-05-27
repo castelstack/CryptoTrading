@@ -15,10 +15,9 @@ export const AccountDropdown = () => {
         <Image
           width={30}
           height={30}
-          objectFit='contain'
           src={'/funny.jpeg'}
           alt='user avatar'
-          className='rounded-full w-8 h-8 bg-slate-300 dark:bg-slate-900 p-1'
+          className='rounded-full w-8 h-8 bg-slate-300 dark:bg-slate-900 p-1 object-contain'
         />
         <p>John Doe</p>
       </DropdownMenuTrigger>

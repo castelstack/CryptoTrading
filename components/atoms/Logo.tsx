@@ -12,10 +12,10 @@ export const Logo = () => {
       <Image
         width={500}
         height={50}
-        objectFit='contain'
         src={theme === 'light' ? '/logo.svg' : '/logoWhite.svg'}
         alt='logo'
-        className='h-[50px] w-[50px]'
+        priority
+        className='h-[50px] w-[50px] object-contain'
       />
     </Link>
   );

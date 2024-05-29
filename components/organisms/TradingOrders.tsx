@@ -6,8 +6,8 @@ import { Button } from '../ui/button';
 export const TradingOrders = () => {
   const [tab, setTab] = useState(true);
   return (
-    <section className=' w-full bg-slate-50 dark:bg-slate-900 border p-2'>
-      <div className='dark:bg-slate-900 border   dark:border-none p-1 flex items-center gap-2 w-max'>
+    <section className=' w-full bg-slate-50 dark:bg-slate-900 dark:border-slate-800 border p-2'>
+      <div className='dark:bg-slate-900 border dark:border-none p-1 flex items-center gap-2 w-max'>
         <Button
           type='button'
           onClick={() => setTab((prev) => !prev)}

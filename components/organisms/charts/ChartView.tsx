@@ -20,7 +20,7 @@ export default function ChartView() {
   } = useGetSeries();
   return (
     <>
-      <div className='flex gap-4 '>
+      <div className='flex gap-4 max-md:justify-between max-md:grid grid-cols-2 '>
         <TimeIntervalSelect
           setTimer={setChartTimeInterval}
           currTimeInterval={chartTimeInterval}

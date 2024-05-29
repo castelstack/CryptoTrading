@@ -27,7 +27,7 @@ export const BaseCurrencySelect = ({
   };
 
   return (
-    <div className=' overflow-x-auto flex items-center gap-3'>
+    <div className='hideScrollbar overflow-x-auto flex items-center gap-3'>
       {baseCoins.map((coin) => (
         <Button
           key={coin}

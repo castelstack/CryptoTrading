@@ -36,20 +36,20 @@ export default function PairChart({
         position: 'right',
         labels: {
           style: {
-            colors: isDarkTheme ? '#475569' : '#cbd5e1',
+            colors: isDarkTheme ? '#475569' : '#94a3b8',
             fontWeight: 500,
           },
         },
         axisBorder: {
           show: true,
-          color: isDarkTheme ? '#475569' : '#cbd5e1',
+          color: isDarkTheme ? '#475569' : '#94a3b8',
           offsetX: 0,
           offsetY: 0,
         },
         axisTicks: {
           show: true,
-          borderType: isDarkTheme ? '#475569' : '#cbd5e1',
-          color: isDarkTheme ? '#475569' : '#cbd5e1',
+          borderType: isDarkTheme ? '#475569' : '#94a3b8',
+          color: isDarkTheme ? '#475569' : '#94a3b8',
         },
       },
       yaxis: {
@@ -59,7 +59,7 @@ export default function PairChart({
         },
         labels: {
           style: {
-            colors: isDarkTheme ? '#475569' : '#cbd5e1',
+            colors: isDarkTheme ? '#475569' : '#94a3b8',
             fontWeight: 500,
           },
         },

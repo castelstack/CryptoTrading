@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      // borderColor: {
+      //   DEFAULT: '#8596AD', // This sets the default border color to tomato
+      // },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

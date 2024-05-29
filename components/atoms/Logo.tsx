@@ -3,20 +3,43 @@
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const Logo = () => {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className='h-[50px] w-[50px]' /> // Placeholder to maintain layout during hydration
+    );
+  }
+
   return (
     <Link href={'/'}>
-      <Image
-        width={500}
-        height={50}
-        src={theme === 'light' ? '/logo.svg' : '/logoWhite.svg'}
-        alt='logo'
-        priority
-        className='h-[50px] w-[50px] object-contain'
-      />
+      {theme === 'light' ? (
+        <Image
+          width={500}
+          height={50}
+          src={'/logo.svg'}
+          alt='logo'
+          priority
+          className='h-[50px] w-[50px] object-contain'
+        />
+      ) : (
+        <Image
+          width={500}
+          height={50}
+          src={'/logoWhite.svg'}
+          alt='logo'
+          priority
+          className='h-[50px] w-[50px] object-contain'
+        />
+      )}
     </Link>
   );
 };

@@ -16,7 +16,7 @@ export const TimeIntervalSelect = ({
   };
 
   return (
-    <div className='hideScrollbar overflow-x-auto flex items-center gap-3 md: w-[350px]'>
+    <div className='hideScrollbar overflow-x-auto flex items-center md:gap-3 gap-2 md:w-[350px] w-full'>
       {timeIntervals.map((time) => (
         <Button
           key={time}

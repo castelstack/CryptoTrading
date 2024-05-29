@@ -8,8 +8,8 @@ import { Button } from '../ui/button';
 export const DispayOrdersAndTrades = () => {
   const [tab, setTab] = useState(true);
   return (
-    <section className=' w-full border dark:border-slate-700 p-2'>
-      <div className='dark:bg-slate-700 p-1  grid grid-cols-2 gap-2'>
+    <section className=' w-full border dark:border-slate-800 p-2'>
+      <div className='dark:bg-slate-900 p-1  grid grid-cols-2 gap-2'>
         <Button
           type='button'
           onClick={() => setTab((prev) => !prev)}

@@ -1,4 +1,5 @@
 'use client';
+import axios from 'axios';
 import { ArrowDown, ArrowUp, Mountain, BarChart2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
@@ -15,6 +16,23 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
   const [usdValue, setUsdValue] = useState<string | null>(null);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        `https://api.binance.com/api/v3/ticker/24hr?symbol=${pair}`
+      );
+      const data = await res.data;
+      setDailyTicker({
+        priceChange: parseFloat(data.priceChange).toFixed(2),
+        lowPrice: parseFloat(data.lowPrice).toFixed(2),
+        highPrice: parseFloat(data.highPrice).toFixed(2),
+        volume: parseFloat(data.volume).toFixed(2),
+        lastPrice: parseFloat(data.lastPrice).toFixed(2),
+      });
+    };
+    if (pair) {
+      fetchData();
+    }
+
     const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${pair}@ticker`);
 
     ws.onmessage = (event) => {
@@ -52,8 +70,8 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
 
   const priceChangeColor =
     dailyTicker && parseFloat(dailyTicker.priceChange) >= 0
-      ? 'text-green-600'
-      : 'text-red-600';
+      ? 'text-green-600 dark:text-green-600'
+      : 'text-red-600 dark:text-red-600';
 
   if (!dailyTicker) {
     return <div>Loading...</div>;
@@ -69,8 +87,11 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
       </div>
       <section className='flex divide-x dark:divide-slate-700 overflow-x-auto max-md:col-span-full'>
         <div className='flex flex-col gap-1 px-3 animate py-1 min-w-[120px] md:min-w-[150px]'>
-          <p className='text-xs text-slate-600 flex items-center gap-2'>
-            <BarChart2 size={20} className='border border-slate-600 p-1' />
+          <p className='text-xs text-slate-500 dark:text-slate-500 flex items-center gap-2'>
+            <BarChart2
+              size={20}
+              className='border border-slate-400 dark:border-slate-600 p-[2px]'
+            />
             24h Change
           </p>
           <p className={`text-sm ${priceChangeColor}`}>
@@ -78,22 +99,31 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
           </p>
         </div>
         <div className='flex flex-col gap-1 px-3 animate py-1 min-w-[120px] md:min-w-[150px]'>
-          <p className='text-xs text-slate-600 flex items-center gap-2'>
-            <ArrowDown size={20} className='border border-slate-600 p-1' />
+          <p className='text-xs text-slate-500 dark:text-slate-500 flex items-center gap-2'>
+            <ArrowDown
+              size={20}
+              className='border border-slate-400 dark:border-slate-600 p-[2px]'
+            />
             24h Low
           </p>
           <p className='text-sm text-red-600'>{dailyTicker.lowPrice}</p>
         </div>
         <div className='flex flex-col gap-1 px-3 animate py-1 min-w-[120px] md:min-w-[150px]'>
-          <p className='text-xs text-slate-600 flex items-center gap-2'>
-            <ArrowUp size={20} className='border border-slate-600 p-1' />
+          <p className='text-xs text-slate-500 dark:text-slate-500 flex items-center gap-2'>
+            <ArrowUp
+              size={20}
+              className='border border-slate-400 dark:border-slate-600 p-[2px]'
+            />
             24h High
           </p>
           <p className='text-sm text-green-600'>{dailyTicker.highPrice}</p>
         </div>
         <div className='flex flex-col gap-1 px-3 animate py-1 min-w-[120px] md:min-w-[150px]'>
-          <p className='text-xs text-slate-600 flex items-center gap-2'>
-            <Mountain size={20} className='border border-slate-600 p-1' />
+          <p className='text-xs text-slate-500 dark:text-slate-500 flex items-center gap-2'>
+            <Mountain
+              size={20}
+              className='border border-slate-400 dark:border-slate-600 p-[2px]'
+            />
             24h Volume
           </p>
           <p className='text-sm text-green-600'>{dailyTicker.volume}</p>

@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { PairSelect } from '../molecules/PairSelect';
-import { PairDailyTicker } from '../molecules/PairDailyTicker';
-import { BaseCurrencySelect } from '../molecules/BaseCurrencySelect';
-import axios from 'axios';
 import { useAppStore } from '@/store/store';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { BaseCurrencySelect } from '../molecules/BaseCurrencySelect';
+import { PairDailyTicker } from '../molecules/PairDailyTicker';
+import { PairSelect } from '../molecules/PairSelect';
 
 type Coin = {
   symbol: string;
@@ -17,7 +17,7 @@ type CoinPair = {
   pair: string;
 };
 export const PairFullDetails = () => {
-  const handleCurrentPair = useAppStore((state) => state.setCurrentPair);
+  const { setCurrentPair, tradingPair } = useAppStore((state) => state);
   const [baseCurrency, setBaseCurrency] = useState('USDT');
   const [baseCoins, setBaseCoins] = useState([
     'USDT',
@@ -31,61 +31,55 @@ export const PairFullDetails = () => {
     'DOT',
     'LTC',
   ]);
-  const [tradingPair, setTradingPair] = useState<CoinPair[]>([]);
+  // const [tradingPair, ] = useState<CoinPair[]>([]);
+  const [tradingPairData, setTradingPairData] = useState<CoinPair[]>([]);
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [dailyTicker, setDailyTicker] = useState(null);
+  // const [dailyTicker, setDailyTicker] = useState(null);
 
   useEffect(() => {
     const fetchTradingPairs = async () => {
       setLoading(true);
-      await axios
-        .get('https://api.binance.com/api/v3/exchangeInfo')
-        .then((response) => {
-          const data = response.data;
-          console.log(data, 'tradingPairs');
-          const pair = data.symbols
-            .filter(
-              (symbol: Coin) =>
-                symbol.baseAsset === baseCurrency ||
-                symbol.quoteAsset === baseCurrency
-            )
-            .map((symbol: Coin) => ({
-              symbol: symbol.symbol,
-              pair: `${symbol.baseAsset}/${symbol.quoteAsset}`,
-            }));
-          setTradingPair(pair.splice(0, 10));
-          setValue(pair[0].pair);
-          handleCurrentPair({ symbol: pair[0].symbol, pair: pair[0].pair });
-        })
-        .catch((error: any) => {
-          setError(error.message);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      try {
+        const response = await axios.get(
+          'https://api.binance.com/api/v3/exchangeInfo'
+        );
+        const data = response.data;
+
+        // Filter and map trading pairs based on baseCurrency
+        const filteredPairs = data.symbols
+          .filter(
+            (symbol: Coin) =>
+              symbol.baseAsset === baseCurrency ||
+              symbol.quoteAsset === baseCurrency
+          )
+          .map((symbol: Coin) => ({
+            symbol: symbol.symbol,
+            pair: `${symbol.baseAsset}/${symbol.quoteAsset}`,
+          }));
+
+        // Set trading pairs (limit to first 10 for display)
+        const pairsToShow = filteredPairs.slice(0, 10);
+        setTradingPairData(pairsToShow);
+
+        // Set initial selected value
+        if (pairsToShow.length > 0) {
+          setValue(pairsToShow[0].pair);
+          setCurrentPair({
+            symbol: pairsToShow[0].symbol,
+            pair: pairsToShow[0].pair,
+          });
+        }
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchTradingPairs();
-  }, [baseCurrency, handleCurrentPair]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(
-        `https://api.binance.com/api/v3/ticker/24hr?symbol=${value
-          .split('/')
-          .join('')}`
-      );
-      const data = await res.data;
-      console.log(data, 'op');
-      setDailyTicker(data);
-    };
-    if (value) {
-      fetchData();
-    }
-    handleCurrentPair({ symbol: value.split('/').join(''), pair: value });
-  }, [value, handleCurrentPair]);
+  }, [baseCurrency, setCurrentPair]);
 
   return (
     <div className='flex flex-col gap-2'>
@@ -101,11 +95,9 @@ export const PairFullDetails = () => {
           setValue={setValue}
           value={value}
           loading={loading}
-          tradingPair={tradingPair}
+          tradingPair={tradingPairData}
         />
-        {value && (
-          <PairDailyTicker pair={value.split('/').join('').toLowerCase()} />
-        )}
+        {value && <PairDailyTicker pair={tradingPair.symbol} />}
       </div>
     </div>
   );

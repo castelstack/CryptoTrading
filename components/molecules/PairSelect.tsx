@@ -14,7 +14,6 @@ type CoinPair = {
 };
 
 export const PairSelect = ({
-  baseCurrency,
   setValue,
   value,
   loading,
@@ -28,7 +27,7 @@ export const PairSelect = ({
 }) => {
   return (
     <Select value={value} onValueChange={setValue}>
-      <SelectTrigger className='md:w-[270px] w-full py-2 px-0  border-none  focus:ring-none active:ring-none  focus:outline-none active:outline-none'>
+      <SelectTrigger className='md:w-[270px] w-full py-2 px-0  border-none rounded-none  focus:ring-0'>
         <SelectValue
           placeholder='Select pair'
           aria-label={value}

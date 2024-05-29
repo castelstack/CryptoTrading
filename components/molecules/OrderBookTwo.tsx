@@ -85,13 +85,11 @@ export const LiquidationOrderTwo = () => {
       `wss://stream.binance.com:9443/ws/${currentPair.symbol.toLowerCase()}@depth`
     );
 
-    ws.onopen = () => {
-      console.log('WebSocket connection opened');
-    };
+   
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      console.log('WebSocket message received:', message);
+     
 
       if (message.e === 'depthUpdate') {
         const newBids = message.b.map(
@@ -125,10 +123,6 @@ export const LiquidationOrderTwo = () => {
 
     ws.onerror = (error) => {
       console.error('WebSocket error:', error);
-    };
-
-    ws.onclose = (event) => {
-      console.log('WebSocket connection closed:', event);
     };
 
     return () => {

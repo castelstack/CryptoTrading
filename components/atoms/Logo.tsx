@@ -28,7 +28,7 @@ export const Logo = () => {
           src={'/logo.svg'}
           alt='logo'
           priority
-          className='h-[50px] w-[50px] object-contain'
+          className='h-[40px] w-[40px] md:h-[50px] md:w-[50px] object-contain'
         />
       ) : (
         <Image
@@ -37,7 +37,7 @@ export const Logo = () => {
           src={'/logoWhite.svg'}
           alt='logo'
           priority
-          className='h-[50px] w-[50px] object-contain'
+          className='h-[40px] w-[40px] md:h-[50px] md:w-[50px] object-contain'
         />
       )}
     </Link>

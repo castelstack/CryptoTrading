@@ -4,16 +4,16 @@ import { DispayOrdersAndTrades } from '@/components/organisms/DispayOrdersAndTra
 import { Header } from '@/components/organisms/Header';
 import { PairFullDetails } from '@/components/organisms/PairFullDetails';
 import { TradingView } from '@/components/organisms/TradingView';
-// import ChartView from '../components/organisms/charts/ChartView';
 import { AppBar } from '@/components/organisms/AppBar';
 import dynamic from 'next/dynamic';
+import { TradingOrders } from '@/components/organisms/TradingOrders';
 const ChartView = dynamic(
   () => import('../components/organisms/charts/ChartView'),
   { ssr: false }
 );
 export default function Home() {
   return (
-    <div className='relative'>
+    <div className='relative max-md:pb-10'>
       <Header />
       <div className='wrapper my-12'>
         <PairFullDetails />
@@ -25,6 +25,9 @@ export default function Home() {
             <DispayOrdersAndTrades />
             <TradingView />
           </div>
+        </div>
+        <div className='grid xl:grid-cols-[1fr_257px] lg:grid-cols-[1fr_220px] grid-cols-1 mt-6'>
+          <TradingOrders />
         </div>
       </div>
       <AppBar />

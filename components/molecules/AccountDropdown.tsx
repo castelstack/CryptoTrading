@@ -11,7 +11,7 @@ import Image from 'next/image';
 export const AccountDropdown = () => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='w-[150px] shadow py-1 px-3 flex items-center gap-2 bg-slate-100 dark:bg-slate-800 rounded-none'>
+      <DropdownMenuTrigger className='md:w-[150px] shadow py-1 px-3 flex items-center gap-2 bg-slate-100 dark:bg-slate-800 rounded-none'>
         <Image
           width={30}
           height={30}

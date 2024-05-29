@@ -30,7 +30,7 @@ export const TradeAgg = () => {
           {
             params: {
               symbol: currentPair.symbol.toUpperCase(),
-              limit: 12, // Limit to the top 10 orders
+              limit: 16, // Limit to the top 10 orders
             },
           }
         );
@@ -71,7 +71,7 @@ export const TradeAgg = () => {
           </p>
           <p className='text-xs dark:text-slate-400'>Time</p>
         </div>
-        <div className='flex flex-col '>
+        <div className='flex flex-col overflow-y-auto max-h-[476px]'>
           {depthData.map((order: any, index) => (
             <div
               key={index}

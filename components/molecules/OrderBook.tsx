@@ -30,6 +30,7 @@ export const OrderBook = () => {
     asks: [],
   });
   const [filter, setFilter] = useState<'all' | 'bids' | 'asks'>('all');
+  const limit = filter === 'all' ? 8 : 14;
 
   useEffect(() => {
     if (!currentPair) return;
@@ -44,7 +45,7 @@ export const OrderBook = () => {
             method: 'depth',
             params: {
               symbol: currentPair.symbol.toUpperCase(),
-              limit: 5, // Limit to the top 10 orders
+              limit: limit, // Limit to the top 10 orders
             },
           }
         );
@@ -85,8 +86,6 @@ export const OrderBook = () => {
       `wss://stream.binance.com:9443/ws/${currentPair.symbol.toLowerCase()}@depth`
     );
 
-   
-
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
 
@@ -111,10 +110,10 @@ export const OrderBook = () => {
           E: message.E,
           T: message.T,
           bids: calculatePercentages(
-            [...newBids, ...prevData.bids].slice(0, 5)
+            [...newBids, ...prevData.bids].slice(0, limit)
           ),
           asks: calculatePercentages(
-            [...newAsks, ...prevData.asks].slice(0, 5)
+            [...newAsks, ...prevData.asks].slice(0, limit)
           ),
         }));
       }
@@ -131,7 +130,7 @@ export const OrderBook = () => {
     return () => {
       ws.close();
     };
-  }, [currentPair]);
+  }, [currentPair, limit]);
 
   const calculatePercentages = (orders: Order[]) => {
     const totalQuantity = orders.reduce(
@@ -207,16 +206,18 @@ export const OrderBook = () => {
       <section className='overflow-x-auto'>
         <div className='min-w-full bg-white dark:bg-transparent '>
           <div className='flex items-center justify-between h-[28px]'>
-            <p className='text-xs text-slate-700 dark:text-slate-400'>Price({currentPair.pair.split('/')[0]})</p>
+            <p className='text-xs text-slate-700 dark:text-slate-400'>
+              Price({currentPair.pair.split('/')[0]})
+            </p>
             <p className='text-xs text-slate-700 dark:text-slate-400'>
               Quantity({currentPair.pair.split('/')[1]})
             </p>
           </div>
-          <div className='flex flex-col '>
+          <div className='flex flex-col gap-1 overflow-y-auto max-h-[392px]'>
             {filteredOrders().map((order: any, index) => (
               <div
                 key={index}
-                className='relative h-[28px] flex justify-between items-center'
+                className='relative h-[28px] flex justify-between items-center content-center'
               >
                 <p className='text-xs z-[1] text-slate-700 dark:text-slate-200'>
                   {order.price.toFixed(2)}
@@ -226,7 +227,7 @@ export const OrderBook = () => {
                 </p>
                 <div
                   style={{ width: `${order.percentage}%` }}
-                  className={`absolute top-0 w-full z-[0] h-[28px] right-0 ${
+                  className={`absolute top-0 bottom-0 w-full z-[0] h-[28px] right-0 ${
                     order.side === 'BUY'
                       ? 'bg-green-50 dark:bg-green-600 '
                       : 'bg-red-50 dark:bg-red-600'

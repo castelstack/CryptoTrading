@@ -16,7 +16,7 @@ export default function Home() {
           </div>
           <div className='grid xl:grid-cols-[257px_257px] lg:grid-cols-[200px_200px] md:grid-cols-2 gap-4'>
             <DispayOrdersAndTrades />
-            <TradingView/>
+            <TradingView />
           </div>
         </div>
       </div>

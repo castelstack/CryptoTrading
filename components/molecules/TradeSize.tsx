@@ -19,9 +19,7 @@ export const TradeSize = ({ tradingSize, setSize }: SizerSelectProps) => {
           type={'button'}
           variant={tradingSize === size ? 'default' : 'outline'}
           className={`h-4 py-3 px-2 w-full rounded-none text-xs font-normal animate ${
-            tradingSize === size
-              ? ''
-              : 'text-slate-500 dark:text-slate-500'
+            tradingSize === size ? '' : 'text-slate-500 dark:text-slate-400'
           }`}
           onClick={() => handleSizeClick(size)}
         >

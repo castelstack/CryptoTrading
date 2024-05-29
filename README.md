@@ -8,7 +8,7 @@ Welcome to Crypto Trading built using Next.js, Tailwind CSS, ApexChart and Axios
 
 ## Live Demo
 
-Check out the live demo of the website: coming soon...
+Check out the live demo of the website: https://crypto-spot.netlify.app/
 
 ## Technologies Used
 

@@ -24,7 +24,7 @@ export const AppBar = () => {
           <Button
             type='button'
             variant={'default'}
-            className='rounded-none w-full bg-green-600 dark:bg-green-800 hover:bg-green-400'
+            className='rounded-none w-full text-slate-50 bg-green-600 dark:bg-green-800 hover:bg-green-400'
           >
             {'Buy'}
           </Button>

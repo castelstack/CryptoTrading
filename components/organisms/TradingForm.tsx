@@ -87,8 +87,8 @@ export const TradingForm = ({ tabType }: { tabType?: boolean }) => {
           type='button'
           onClick={() => setTab((prev) => !prev)}
           variant={tab ? 'default' : 'destructive'}
-          className={`rounded-none w-full ${
-            tab && 'bg-green-600 dark:bg-green-800 hover:bg-green-400 text-slate-50'
+          className={`rounded-none w-full text-slate-50 ${
+            tab && 'bg-green-600 dark:bg-green-800 hover:bg-green-400 '
           }`}
         >
           {tab ? 'Buy' : 'Sell'}

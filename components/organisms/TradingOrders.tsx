@@ -27,7 +27,7 @@ export const TradingOrders = () => {
       </div>
 
       <div
-        className={`h-[600px] text-center px-2 w-full bg-slate-50 dark:bg-slate-900 grid place-content-center`}
+        className={`h-[400px] text-center px-2 w-full bg-slate-50 dark:bg-slate-900 grid place-content-center`}
       >
         <h4>No orders yet</h4>
         <p>

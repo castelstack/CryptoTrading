@@ -3,7 +3,30 @@ import React from 'react';
 type OrderWithPercent = Order & {
   percentage: number;
 };
-export const OrderBookList = ({ filteredOrders }: any) => {
+export const OrderBookList = ({
+  filteredOrders,
+  loading,
+  error,
+}: {
+  error: Error | null;
+  loading: boolean;
+  filteredOrders: OrderWithPercent[] | any;
+}) => {
+
+  if (loading) {
+    return (
+      <div className='h-[392px] w-full bg-slate-200 dark:bg-slate-900 animate-pulse' />
+    );
+  }
+
+//   if (error) {
+//     return (
+//       <div className='h-[392px] bg-red-600/10 w-full text-red-500 grid place-content-center '>
+//         {error.message}
+//       </div>
+//     );
+//   }
+
   return (
     <div className='flex flex-col gap-1 overflow-y-auto max-h-[392px]'>
       {filteredOrders.map((order: OrderWithPercent, index: number) => (

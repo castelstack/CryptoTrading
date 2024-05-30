@@ -32,7 +32,7 @@ export const useGetPairs = () => {
   const [tradingPairData, setTradingPairData] = useState<CoinPair[]>([]);
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchTradingPairs = async () => {
@@ -67,10 +67,14 @@ export const useGetPairs = () => {
             pair: pairsToShow[0].pair,
           });
         }
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
         setLoading(false);
+      } catch (e) {
+        setLoading(false);
+        if (e instanceof Error) {
+          setError(e);
+        } else {
+          setError(new Error('An unknown error occurred'));
+        }
       }
     };
 
@@ -86,5 +90,6 @@ export const useGetPairs = () => {
     loading,
     tradingPairData,
     tradingPair,
+    error,
   };
 };

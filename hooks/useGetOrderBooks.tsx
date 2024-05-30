@@ -23,6 +23,8 @@ export type OrderTab = "all" | "bids" | "asks"
 
 export const useGetOrderBooks = () => {
     const currentPair = useAppStore((state) => state.tradingPair);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
     const [depthData, setDepthData] = useState<DepthData>({
       lastUpdateId: 0,
       E: 0,
@@ -38,6 +40,7 @@ export const useGetOrderBooks = () => {
   
       // Fetch initial order book
       const fetchOrderBook = async () => {
+        setLoading(true);
         try {
           const response = await axios.post(
             'https://api.binance.com/eapi/v1/depth',
@@ -75,9 +78,15 @@ export const useGetOrderBooks = () => {
             bids: calculatePercentages(formattedBids),
             asks: calculatePercentages(formattedAsks),
           });
-        } catch (error) {
-          console.error('Error fetching initial order book:', error);
-        }
+          setLoading(false);
+        } catch (e) {
+            setLoading(false);
+            if (e instanceof Error) {
+              setError(e);
+            } else {
+              setError(new Error('An unknown error occurred'));
+            }
+          }
       };
   
       fetchOrderBook();
@@ -158,6 +167,6 @@ export const useGetOrderBooks = () => {
     };
   
   return (
-    {filter, setFilter, filteredOrders, currentPair}
+    {filter, setFilter, filteredOrders, currentPair, loading, error}
   )
 }

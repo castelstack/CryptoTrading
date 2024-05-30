@@ -2,30 +2,39 @@
 import { useGetDailyTicker } from '@/hooks/useGetDailyTicker';
 import { ArrowDown, ArrowUp, BarChart2, Mountain } from 'lucide-react';
 
-interface Ticker {
-  priceChange: string;
-  lowPrice: string;
-  highPrice: string;
-  volume: string;
-  lastPrice: string;
-}
-
 export const PairDailyTicker = ({ pair }: { pair: string }) => {
-  const { usdValue, dailyTicker } = useGetDailyTicker({pair});
+  const { usdValue, dailyTicker, loading, error } = useGetDailyTicker({ pair });
   const priceChangeColor =
     dailyTicker && parseFloat(dailyTicker.priceChange) >= 0
       ? 'text-green-600 dark:text-green-600'
       : 'text-red-600 dark:text-red-600';
 
-  if (!dailyTicker) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className='hideScrollbar flex gap-2 overflow-x-auto max-md:col-span-full'>
+        {[1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            className='h-[52px] w-[150px] bg-slate-200 dark:bg-slate-900 animate-pulse'
+          />
+        ))}
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='h-[52px] w-full bg-red-600/10 text-red-500 grid place-content-center'>
+        {error.message}
+      </div>
+    );
   }
 
   return (
     <>
       <div className='flex flex-col gap-1 px-3 py-1 '>
         <p className='text-sm text-slate-800 flex items-center gap-2'>
-          {dailyTicker.lastPrice}
+          {dailyTicker?.lastPrice}
         </p>
         <p className={`text-sm ${priceChangeColor}`}>${usdValue}</p>
       </div>
@@ -39,7 +48,7 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
             24h Change
           </p>
           <p className={`text-sm ${priceChangeColor}`}>
-            {dailyTicker.priceChange}
+            {dailyTicker?.priceChange}
           </p>
         </div>
         <div className='flex flex-col gap-1 px-3 py-1 min-w-[120px] md:min-w-[150px]'>
@@ -50,7 +59,7 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
             />
             24h Low
           </p>
-          <p className='text-sm text-red-600'>{dailyTicker.lowPrice}</p>
+          <p className='text-sm text-red-600'>{dailyTicker?.lowPrice}</p>
         </div>
         <div className='flex flex-col gap-1 px-3 py-1 min-w-[120px] md:min-w-[150px]'>
           <p className='text-xs text-slate-500 dark:text-slate-500 flex items-center gap-2 whitespace-nowrap'>
@@ -60,7 +69,7 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
             />
             24h High
           </p>
-          <p className='text-sm text-green-600'>{dailyTicker.highPrice}</p>
+          <p className='text-sm text-green-600'>{dailyTicker?.highPrice}</p>
         </div>
         <div className='flex flex-col gap-1 px-3 py-1 min-w-[120px] md:min-w-[150px]'>
           <p className='text-xs text-slate-500 dark:text-slate-500 flex items-center gap-2 whitespace-nowrap'>
@@ -70,7 +79,7 @@ export const PairDailyTicker = ({ pair }: { pair: string }) => {
             />
             24h Volume
           </p>
-          <p className='text-sm text-green-600'>{dailyTicker.volume}</p>
+          <p className='text-sm text-green-600'>{dailyTicker?.volume}</p>
         </div>
       </section>
     </>

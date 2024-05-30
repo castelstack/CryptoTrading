@@ -5,7 +5,7 @@ import { OrderBookList } from './OrderBookList';
 import { OrderBooksTabs } from './OrderBooksTabs';
 
 export const OrderBook = () => {
-  const { filter, setFilter, filteredOrders, currentPair } = useGetOrderBooks();
+  const { filter, setFilter, filteredOrders, currentPair, loading,error } = useGetOrderBooks();
   return (
     <>
       <OrderBooksTabs filter={filter} setFilter={setFilter} />
@@ -19,7 +19,7 @@ export const OrderBook = () => {
               Quantity({currentPair.pair.split('/')[1]})
             </p>
           </div>
-          <OrderBookList filteredOrders={filteredOrders()} />
+          <OrderBookList filteredOrders={filteredOrders()} loading={loading} error={error}/>
         </div>
       </section>
     </>

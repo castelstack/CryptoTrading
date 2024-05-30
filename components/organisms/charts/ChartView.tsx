@@ -17,7 +17,26 @@ export default function ChartView() {
     chartType,
     setChartTimeInterval,
     chartTimeInterval,
+    error,
+    loading,
   } = useGetSeries();
+
+  if (loading) {
+    return (
+      <div>
+        <div className='h-[282px] w-full bg-slate-200 dark:bg-slate-900 animate-pulse' />
+        <div className='h-[202px] mt-4 w-full bg-slate-200 dark:bg-slate-900 animate-pulse' />
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className='h-[392px] w-full bg-red-600/10 text-red-500 grid place-content-center'>
+        {error.message}
+      </div>
+    );
+  }
+
   return (
     <>
       <div className='flex gap-4 max-md:justify-between max-md:grid grid-cols-2 '>

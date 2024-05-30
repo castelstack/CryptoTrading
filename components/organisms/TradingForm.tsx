@@ -40,11 +40,11 @@ export const TradingForm = ({ tabType }: { tabType?: boolean }) => {
         <div className='my-4 flex flex-col gap-2 '>
           <div className='flex items-center justify-between gap-2'>
             <p className='dark:text-slate-500'>Max pay</p>
-            <p className='dark:text-slate-300'>0{pair.split('/')[0]}</p>
+            <p className='dark:text-slate-300'>0 {pair.split('/')[0]}</p>
           </div>
           <div className='flex items-center justify-between gap-2'>
             <p className='dark:text-slate-500'>Est pay</p>
-            <p className='dark:text-slate-300'>0{pair.split('/')[0]}</p>
+            <p className='dark:text-slate-300'>0 {pair.split('/')[0]}</p>
           </div>
         </div>
         <Button

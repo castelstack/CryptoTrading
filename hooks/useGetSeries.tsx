@@ -5,12 +5,16 @@ import { useTheme } from 'next-themes';
 import { useEffect, useMemo, useState } from 'react';
 
 const useGetSeries = () => {
-  const {symbol} = useAppStore((state) => state.tradingPair);
+  const { symbol } = useAppStore((state) => state.tradingPair);
   const { theme } = useTheme();
   const [series, setSeries] = useState([{ data: [] }]);
   const [volumeSeries, setVolumeSeries] = useState([{ data: [] }]);
-  const [chartType, setChartType] = useState<'line'|'candlestick'|'area'>('candlestick');
+  const [chartType, setChartType] = useState<'line' | 'candlestick' | 'area'>(
+    'candlestick'
+  );
   const [chartTimeInterval, setChartTimeInterval] = useState('1h');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   const isDarkTheme = useMemo(
     () => (theme === 'light' ? false : true),
@@ -19,25 +23,35 @@ const useGetSeries = () => {
 
   useEffect(() => {
     const fetchInitialData = async () => {
-      const response = await fetch(
-        `https://api.binance.com/api/v3/klines?symbol=${symbol.toUpperCase()}&interval=${chartTimeInterval}&limit=100`
-      );
-      const initialData = await response.json();
-      const formattedData = initialData.map((item: any) => ({
-        x: new Date(item[0]),
-        y: [
-          parseFloat(item[1]),
-          parseFloat(item[2]),
-          parseFloat(item[3]),
-          parseFloat(item[4]),
-        ],
-      }));
-      setSeries([{ data: formattedData }]);
-      const formattedVolumeData = initialData.map((item: any) => ({
-        x: new Date(item[0]),
-        y: parseFloat(item[5]),
-      }));
-      setVolumeSeries([{ data: formattedVolumeData }]);
+      try {
+        const response = await fetch(
+          `https://api.binance.com/api/v3/klines?symbol=${symbol.toUpperCase()}&interval=${chartTimeInterval}&limit=100`
+        );
+        const initialData = await response.json();
+        const formattedData = initialData.map((item: any) => ({
+          x: new Date(item[0]),
+          y: [
+            parseFloat(item[1]),
+            parseFloat(item[2]),
+            parseFloat(item[3]),
+            parseFloat(item[4]),
+          ],
+        }));
+        setSeries([{ data: formattedData }]);
+        const formattedVolumeData = initialData.map((item: any) => ({
+          x: new Date(item[0]),
+          y: parseFloat(item[5]),
+        }));
+        setVolumeSeries([{ data: formattedVolumeData }]);
+        setLoading(false);
+      } catch (e) {
+        setLoading(false);
+        if (e instanceof Error) {
+          setError(e);
+        } else {
+          setError(new Error('An unknown error occurred'));
+        }
+      }
     };
 
     fetchInitialData();
@@ -108,6 +122,8 @@ const useGetSeries = () => {
     chartType,
     setChartTimeInterval,
     chartTimeInterval,
+    loading,
+    error,
   };
 };
 

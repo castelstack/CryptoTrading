@@ -30,7 +30,7 @@ export const OrderBook = () => {
     asks: [],
   });
   const [filter, setFilter] = useState<'all' | 'bids' | 'asks'>('all');
-  const limit = filter === 'all' ? 8 : 14;
+  const limit = filter === 'all' ? 7 : 14;
 
   useEffect(() => {
     if (!currentPair) return;

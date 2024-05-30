@@ -42,7 +42,6 @@ const renderComponent = (
   }
 };
 export const TradingForm = ({ tabType }: { tabType?: boolean }) => {
-  const [tab, setTab] = useState(tabType);
   const [type, setType] = useState<MarketType>('limit');
   const [tradingSize, setTradingSize] = useState('');
   const { pair } = useAppStore((state) => state.tradingPair);
@@ -85,13 +84,13 @@ export const TradingForm = ({ tabType }: { tabType?: boolean }) => {
         </div>
         <Button
           type='button'
-          onClick={() => setTab((prev) => !prev)}
-          variant={tab ? 'default' : 'destructive'}
+          // onClick={() => setTab((prev) => !prev)}
+          variant={tabType ? 'default' : 'destructive'}
           className={`rounded-none w-full !text-slate-50 ${
-            tab && 'bg-green-600 dark:bg-green-800 hover:bg-green-400 '
+            tabType && 'bg-green-600 dark:bg-green-800 hover:bg-green-400'
           }`}
         >
-          {tab ? 'Buy' : 'Sell'}
+          {tabType ? 'Buy' : 'Sell'}
         </Button>
       </div>
     </>

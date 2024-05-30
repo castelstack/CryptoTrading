@@ -1,5 +1,3 @@
-'use client';
-
 import { DispayOrdersAndTrades } from '@/components/organisms/DispayOrdersAndTrades';
 import { Header } from '@/components/organisms/Header';
 import { PairFullDetails } from '@/components/organisms/PairFullDetails';

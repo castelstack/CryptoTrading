@@ -13,7 +13,7 @@ export const OrderBookList = ({
   filteredOrders: OrderWithPercent[] | any;
 }) => {
 
-  if (loading) {
+  if (filteredOrders.length<=0) {
     return (
       <div className='h-[392px] w-full bg-slate-200 dark:bg-slate-900 animate-pulse' />
     );
